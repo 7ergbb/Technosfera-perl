@@ -29,7 +29,36 @@ no warnings 'experimental';
 
 sub tokenize {
 	chomp(my $expr = shift);
-	my @res;
+	
+	my @res=();
+    my $type="sign";
+    my $count = 0;
+
+foreach $a (split //,$expr)
+{
+  
+
+     if ($a=~m/\d+|\./)
+        { 
+            $type="num";           
+            $res[$count]= $res[$count].$a;
+         }
+   
+     else {
+       
+             $count++ if $type ne "sign"; 
+    
+            if ($a eq '-' and $count<1 ){ $a="U".$a}
+            if ($a eq '-' and $type eq "sign" ) {$a="U".$a}
+              
+             $res[$count]=$a;
+             $type = "sign"; 
+             $count++;
+    }            
+
+}
+	
+	
 
 	# ...
 
