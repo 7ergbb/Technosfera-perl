@@ -38,7 +38,7 @@ while (my $expression = <>) {
 	### Check using perl
 	if (0) {
 		chomp $expression;
-		my $x = $expression =~ s{\^}{**}r; # replace "^" with "**"
+		my $x = $expression =~ s{\^}{**}r; # replace "^" with "**";
 		if( my $v = eval( $x ) or not $@ ) {
 			print STDERR "Perl: $v\n";
 		} else {

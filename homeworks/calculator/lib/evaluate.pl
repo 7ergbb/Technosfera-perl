@@ -22,7 +22,7 @@ sub evaluate {
 
 	
 	
-my @num_stack = @$rpn;
+my @out = @$rpn;
 foreach (@out) {
 
   if ($_=~m/\d+|\./) {
