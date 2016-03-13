@@ -20,9 +20,27 @@ no warnings 'experimental';
 sub evaluate {
 	my $rpn = shift;
 
-	# ...
+	
+	
+my @num_stack = @$rpn;
+foreach (@out) {
 
-	return 0;
+  if ($_=~m/\d+|\./) {
+        push (@num_stack, $_);
+		}
+ else {
+      my   $op1= pop @num_stack;
+	  my   $op2=pop @num_stack;
+      my   $itog =eval (qq ( $op1$_$op2));
+	     push (@num_stack, $itog)
+		}
+		
+		#print @num_stack;
+}
+	
+	
+
+	return $num_stack($#num_stack);
 }
 
 1;
