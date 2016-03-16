@@ -19,8 +19,8 @@ no warnings 'experimental';
 
 sub evaluate {
 	my $rpn = shift;
-
-	
+    my @num_stack =();
+	my $itog;
 	
 my @out = @$rpn;
 foreach (@out) {
@@ -28,10 +28,24 @@ foreach (@out) {
   if ($_=~m/\d+|\./) {
         push (@num_stack, $_);
 		}
- else {
+  elsif ($_ eq 'U-') 
+ 	      { 
+ 	      	$itog = (pop @num_stack)*(-1);
+            push (@num_stack, $itog) 	      	
+
+ 	       } 
+  elsif ($_ eq  'U+') 
+ 	      { 
+ 	      	$itog = 1*(pop @num_stack);
+            push (@num_stack, $itog) 	      	
+
+ 	       } 
+
+   else {
+ 	     
       my   $op1= pop @num_stack;
 	  my   $op2=pop @num_stack;
-      my   $itog =eval (qq ( $op1$_$op2));
+           $itog =eval ( "($op2)$_($op1)");
 	     push (@num_stack, $itog)
 		}
 		
@@ -40,7 +54,7 @@ foreach (@out) {
 	
 	
 
-	return $num_stack($#num_stack);
+	return  (pop @num_stack);
 }
 
 1;

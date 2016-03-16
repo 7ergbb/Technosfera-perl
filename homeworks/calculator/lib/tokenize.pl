@@ -10,13 +10,16 @@
 
 Стоит заметить, что после унарного оператора нельзя использовать бинарные операторы
 Например последовательность 1 + - / 2 невалидна. Бинарный оператор / идёт после использования унарного "-"
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 =cut
+
+
+
 
 use 5.010;
 use strict;
 use warnings;
-use diagnostics;
+#use diagnostics;
 BEGIN{
 	if ($] < 5.018) {
 		package experimental;
@@ -50,8 +53,10 @@ foreach $a (split //,$expr)
        
              $count++ if $type ne "sign"; 
     
-            if ($a eq '-' and $count<1 ){ $a="U".$a}
-            if ($a eq '-' and $type eq "sign" ) {$a="U".$a}
+            if (($a eq '-' and $count<1) or ($a eq '+' and $count<1 ) ){ $a="U".$a}
+            if (($a eq '-' and $type eq "sign") or ($a eq '+' and $type eq "sign") ) {$a="U".$a}
+            #if ($a eq '+' and $count<1 ){ $a="U".$a}
+            #if ($a eq '+' and $type eq "sign" ) {$a="U".$a}
               
              $res[$count]=$a;
              $type = "sign"; 

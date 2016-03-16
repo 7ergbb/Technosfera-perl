@@ -10,7 +10,7 @@
 use 5.010;
 use strict;
 use warnings;
-use diagnostics;
+#use diagnostics;
 BEGIN{
 	if ($] < 5.018) {
 		package experimental;
@@ -24,8 +24,8 @@ require "$FindBin::Bin/../lib/tokenize.pl";
 sub rpn {
 	my $expr = shift;
 	my $source = tokenize($expr);
-	my @rpn;
-
+	my @rpn = ();
+        my$so='';
 	
 	
 	
@@ -33,7 +33,7 @@ sub rpn {
     my @stack=();
     my %priority = ('U-',4,'U+',4,'^',3,'*',2,'/',2,'+',1,'-',1,'(',0,')',0);
 
-    foreach (@tokens){
+    foreach (@$source){
                  
 				 if ($_=~m/\d/) {push (@rpn, $_)}
                  
