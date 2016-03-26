@@ -1,3 +1,4 @@
+
 =head1 DESCRIPTION
 
 Эта функция должна принять на вход арифметическое выражение,
@@ -13,63 +14,77 @@
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 =cut
 
-
-
-
 use 5.010;
 use strict;
 use warnings;
-#use diagnostics;
-BEGIN{
-	if ($] < 5.018) {
-		package experimental;
-		use warnings::register;
-	}
+use diagnostics;
+
+BEGIN {
+    if ( $] < 5.018 ) {
+
+        package experimental;
+        use warnings::register;
+    }
 }
 no warnings 'experimental';
 
-
-
-
-
 sub tokenize {
-	chomp(my $expr = shift);
-	
-	my @res=();
-    my $type="sign";
+    chomp( my $expr = shift );
+    my @res;
+    my $type  = "sign";
     my $count = 0;
 
-foreach $a (split //,$expr)
-{
-  
+    if ( $expr =~ /\d+\.\d+\.+|[eE][eE]+|\(\D[-]+\D\)|^\D+$/ ) { die('Nan') }
+    if ( $expr =~ /^\)|^[a-zA-Z)]+/ ) { die('Nan') }
 
-     if ($a=~m/\d+|\./)
-        { 
-            $type="num";           
-            $res[$count]= $res[$count].$a;
-         }
-   
-     else {
-       
-             $count++ if $type ne "sign"; 
-    
-            if (($a eq '-' and $count<1) or ($a eq '+' and $count<1 ) ){ $a="U".$a}
-            if (($a eq '-' and $type eq "sign") or ($a eq '+' and $type eq "sign") ) {$a="U".$a}
-            #if ($a eq '+' and $count<1 ){ $a="U".$a}
-            #if ($a eq '+' and $type eq "sign" ) {$a="U".$a}
-              
-             $res[$count]=$a;
-             $type = "sign"; 
-             $count++;
-    }            
+    $expr =~ s/(\s+)//g;
 
-}
-	
-	
+    foreach ( split //, $expr ) {
 
-	# ...
+        if ( $_ =~ m/\d+|\.|[eE]/ ) {
+            $type = "num";
+            if ( defined $res[$count] ) {
+                $res[$count] = $res[$count] . $_;
+            }
+            else { $res[$count] = $_ }
+        }
 
-	return \@res;
+        elsif ( $_ =~ m/[+-]/
+            and defined $res[$count]
+            and $res[$count] =~ m/.*[eE]$/ )
+
+        {
+
+            if ( defined $res[$count] ) {
+                $res[$count] = $res[$count] . $_;
+            }
+            else { $res[$count] = $_ }
+        }
+
+        else {
+
+            $count++ if $type ne "sign";
+
+            if ( ( $_ eq '-' and $count < 1 ) or ( $_ eq '+' and $count < 1 ) )
+            {
+                $_ = "U" . $_;
+            }
+            if (   ( $_ eq '-' and $type eq "sign" )
+                or ( $_ eq '+' and $type eq "sign" ) )
+            {
+                $_ = "U" . $_;
+            }
+
+            $res[$count] = $_;
+            $type = "sign";
+            $count++;
+
+        }
+
+    }
+
+    return \@res;
+
 }
 
 1;
