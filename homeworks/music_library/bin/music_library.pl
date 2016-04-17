@@ -6,4 +6,4 @@ use FindBin;
 use lib "$FindBin::Bin/../lib";
 use Local::MusicLibrary;
 
-musicLib;
+Local::MusicLibrary::musicLib;
