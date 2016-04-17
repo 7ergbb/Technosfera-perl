@@ -3,7 +3,6 @@ package Local::MusicFiltr;
 use strict;
 use warnings;
 use Getopt::Long;
-use Data::Dumper qw(Dumper);
 use Exporter 'import';
 our @EXPORT = qw(filter get_columns);
 
