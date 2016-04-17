@@ -2,8 +2,6 @@ package Local::MusicLibrary;
 
 use strict;
 use warnings;
-#use FindBin;
-#use lib "$FindBin::Bin/../lib";
 use Local::MusicParser;
 use Local::MusicFiltr;
 use Local::MusicSort;
