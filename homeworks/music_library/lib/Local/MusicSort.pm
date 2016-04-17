@@ -61,9 +61,7 @@ sub libsort {
             push( @sort_music_lib, \@lib_str );
         }
         return \@sort_music_lib;
-
     }
-
 }
 
 #

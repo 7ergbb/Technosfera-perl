@@ -29,7 +29,6 @@ sub libprint {
             if ( length $music_lib[$line][$iterat] > $columns[$iterat] ) {
                 $columns[$iterat] = length $music_lib[$line][$iterat];
             }
-
         }
     }
 

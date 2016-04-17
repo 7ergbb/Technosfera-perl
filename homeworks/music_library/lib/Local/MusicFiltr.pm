@@ -27,29 +27,22 @@ sub filter {
                 }
             }
         }
-
     }
-
 }
 
 sub get_columns {
 
     my ( $option_, $music_ ) = @_;
-
-    my $count = 0;
-    my %option_list = map { $_, $count++ } split /[,]/,
+    my %option_list = map { $_, 1 } split /[,]/,
         $$option_{'columns'};    #
-    my @option_arr = split /[,]/, $$option_{'columns'};
-
+    
     for my $music_key ( keys %$music_ ) {
 
         for my $music_key_ins ( keys %{ $music_->{$music_key} } ) {
 
             delete ${$music_}{$music_key}{$music_key_ins}
                 unless exists $option_list{$music_key_ins};
-
         }
-
     }
 }
 
