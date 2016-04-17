@@ -2,7 +2,6 @@ package Local::MusicSort;
 
 use strict;
 use warnings;
-use Data::Dumper qw(Dumper);
 use Exporter 'import';
 our @EXPORT = qw(libsort);
 
