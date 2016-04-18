@@ -1,4 +1,4 @@
-package Local::MusicFiltr;
+package Local::MusicFilter;
 
 use strict;
 use warnings;
@@ -26,13 +26,13 @@ sub filter {
             }
         }
     }
+ 
 }
 
 sub get_columns {
 
     my ( $option, $music ) = @_;
     my %option_list = map { $_, 1 } split /,/, $$option{'columns'};
-
     for my $music_key ( keys %$music ) {
 
         for my $music_key_ins ( keys %{ $music->{$music_key} } ) {
