@@ -4,8 +4,7 @@ use strict;
 use warnings;
 use Getopt::Long;
 use Exporter 'import';
-
-our @EXPORT = qw(get_options parse);
+our @EXPORT_OK = qw(get_options parse);
 
 sub get_options {
 
@@ -33,19 +32,22 @@ sub parse {
         my ( $band, $year_album, $track_format )
             = ( split qr{/}, $music_line )[ 1 .. 4 ];
         my ( $year, $album ) = split /-/, $year_album, 2;
-        my ( $track, $format ) = split /[.]/, $track_format;
+        my ( $track, $format ) = ( $track_format =~ /(.+)\.+(.+)$/ );
         $year =~ s/(\s+)//g;
         if ( defined $album ) { $album =~ s/(\s+)//g; }
+        my %track = (
+            'band'   => $band,
+            'year'   => $year,
+            'album'  => $album,
+            'track'  => $track,
+            'format' => $format,
 
-        $music{$track_number}{band}   = $band;
-        $music{$track_number}{year}   = $year;
-        $music{$track_number}{album}  = $album;
-        $music{$track_number}{track}  = $track;
-        $music{$track_number}{format} = $format;
-
+        );
+        $music{$track_number} = \%track;
         $track_number++;
 
         #if ($track_number >=3) {last};  #for tests
+
     }
     return \%music;
 
