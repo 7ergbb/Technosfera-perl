@@ -2,12 +2,12 @@ package Local::MusicLibrary;
 
 use strict;
 use warnings;
-use Local::MusicParser;
-use Local::MusicFiltr;
-use Local::MusicSort;
-use Local::MusicPrint ;
+use Local::MusicParser qw(get_options parse);
+use Local::MusicFilter qw(filter get_columns);
+use Local::MusicSort qw(libsort);
+use Local::LibPrint qw(libprint);
 use Exporter 'import';
-our @EXPORT = qw(musicLib);
+our @EXPORT_OK = qw(musicLib);
 
 =encoding utf8
 =head1 NAME
@@ -28,13 +28,13 @@ my $opt       = Local::MusicParser::get_options;
 my $music_lib = Local::MusicParser::parse;
 
 #   удаление лишних строк (если требуется)
-Local::MusicFiltr::filter( $opt, $music_lib );
+Local::MusicFilter::filter( $opt, $music_lib );
 
 #формирование требуемых колонок -  в виде массива-массивов
-Local::MusicFiltr::get_columns( $opt, $music_lib );
+Local::MusicFilter::get_columns( $opt, $music_lib );
 
 #  подготовка(расчет размера колонок и тдтп) и печать библиотеки музыки 
-Local::MusicPrint::libprint( Local::MusicSort::libsort( $opt, $music_lib ) );
+Local::LibPrint::libprint( Local::MusicSort::libsort( $opt, $music_lib ) );
 
 }
 
