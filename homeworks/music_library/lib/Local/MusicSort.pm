@@ -3,7 +3,7 @@ package Local::MusicSort;
 use strict;
 use warnings;
 use Exporter 'import';
-our @EXPORT = qw(libsort);
+our @EXPORT_OK = qw(libsort);
 
 sub libsort {
 
@@ -15,7 +15,7 @@ sub libsort {
     my @lib_str;
     #my @colums_out = ('band','year','album','track','format')  для расстановки колонок в требуемом порядке 
     #                                                             но не работет для двух одинаковых колонок;
-    my @colums_out = split /[,]/, $$option{'columns'};
+    my @colums_out = split /,/, $$option{'columns'};
     my $key_sort = ${$option}{'sort'};
 
     if ( exists ${$option}{'sort'} and ${$option}{'sort'} ne 'year' ) {
@@ -26,8 +26,7 @@ sub libsort {
         {
             my @lib_str = ();
             foreach (@colums_out) {
-                push( @lib_str, $lib_hash{$key}{$_} )
-                    if exists $lib_hash{$key}{$_};
+                push( @lib_str, $lib_hash{$key}{$_} ) if exists $lib_hash{$key}{$_};
             }
             push( @sort_music_lib, \@lib_str );
         }
@@ -42,8 +41,7 @@ sub libsort {
         {
             my @lib_str = ();
             foreach (@colums_out) {
-                push( @lib_str, $lib_hash{$key}{$_} )
-                    if exists $lib_hash{$key}{$_};
+                push( @lib_str, $lib_hash{$key}{$_} )if exists $lib_hash{$key}{$_};
             }
             push( @sort_music_lib, \@lib_str );
         }
@@ -54,8 +52,7 @@ sub libsort {
         foreach my $key ( sort keys %lib_hash ) {
             my @lib_str = ();
             foreach (@colums_out) {
-                push( @lib_str, $lib_hash{$key}{$_} )
-                    if exists $lib_hash{$key}{$_};
+                push( @lib_str, $lib_hash{$key}{$_} )if exists $lib_hash{$key}{$_};
             }
             push( @sort_music_lib, \@lib_str );
         }
