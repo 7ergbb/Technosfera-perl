@@ -4,6 +4,6 @@ use strict;
 use warnings;
 use FindBin;
 use lib "$FindBin::Bin/../lib";
-use Local::MusicLibrary;
+use Local::MusicLibrary qw(musicLib);
 
-Local::MusicLibrary::musicLib;
+musicLib;
