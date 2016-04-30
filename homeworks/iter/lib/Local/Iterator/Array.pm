@@ -19,17 +19,17 @@ Local::Iterator::Array - array-based iterator
 
 has 'array' => ('is' => 'rw');
 
-has 'last_plase' =>('is' => 'rw' , 'default' => sub { 0 });
+has 'last_place' =>('is' => 'rw' , 'default' => sub { 0 });
 
 
 
 sub next {
 	my ($self) = @_;
-	if ($self->last_plase == scalar @{$self->array}){
+	if ($self->last_place == scalar @{$self->array}){
 		return (undef,1);
 	}
-	$self->last_plase($self->last_plase+1);
-	return ($self->array->[$self->last_plase-1],0);
+	$self->last_place($self->last_place+1);
+	return ($self->array->[$self->last_place-1],0);
       
 
 }
