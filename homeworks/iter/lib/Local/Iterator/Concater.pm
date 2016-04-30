@@ -3,7 +3,7 @@ package Local::Iterator::Concater;
 use strict;
 use warnings;
 use Moo;
-extends 'Local::Iterator';
+use parent 'Local::Iterator';
 
 =encoding utf8
 
