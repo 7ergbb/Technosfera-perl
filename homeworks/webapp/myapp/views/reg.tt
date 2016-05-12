@@ -1,0 +1,40 @@
+
+ <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Регистрация
+                    <!-- <small>Secondary Text</small> -->
+                </h1>
+            </div>
+        </div>
+
+<div class="row">
+   <div class="col-md-6">
+	 
+	  <form role="form" action= '/reg' method='POST'>
+	 
+	 <div class="form-group">
+	 <label for="Nicname">Ник</label>
+	  <input type="text" name= "user" class="form-control" placeholder="Nicname" required>
+	</div>
+
+	<div class="form-group">
+	 <label for="Name">ФИО</label>
+	  <input type="text" name= "fio" class="form-control" placeholder="ФИО" required>
+	</div>
+
+	 <div class="form-group">
+	  <label for="pass">Пароль</label>
+	  <input type="password" name= "pass" class="form-control" id="pass" placeholder="Пароль" required>
+	 </div>
+	 
+	 <div class="form-group">
+	 <label for="url_link">Ссылка на проект</label>
+	  <input type="url" name= "url_link" class="form-control" placeholder="http://" required>
+	</div>
+	 
+	 <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+	</form>
+
+  </div>
+</div>
+

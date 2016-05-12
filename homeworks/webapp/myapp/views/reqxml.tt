@@ -1,0 +1,20 @@
+<div class="row">
+            <div class="col-lg-6"> 
+                <h2 class="page-header"><span class="glyphicon glyphicon-cloud-upload"></span> Запросы к XML-RPC серверу</h2>
+            </div>
+        </div>
+
+
+
+<div class="row">
+ <div class="col-lg-6">
+ [% server_status %]
+ <form class="form-signin" role="form" action= '/reqxml' method='POST'>
+      <div class="form-group">
+      <input class="form-control" id="focusedInput" type="text" name= "arg" autofocus>
+      </div>
+      <div class="alert alert-success"> [% res %]</div>
+      <button type="submit" class="btn btn-success">Считать</button>
+    </form>
+ </div>
+</div>

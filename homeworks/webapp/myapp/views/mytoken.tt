@@ -1,0 +1,18 @@
+<div class="row">
+            <div class="col-lg-6">
+                <h2 class="page-header"> <span class="glyphicon glyphicon-send"></span> Токен для XML-RPC
+                </h2>
+            </div>
+        </div>
+
+ <div class="row">
+            <div class="col-lg-6">       
+
+    <form class="form-signin" role="form" action= '/token' method='POST'>
+      <div class="form-group">
+      <input class="form-control" id="focusedInput" type="text" value= [% token %] autofocus>
+      </div>
+      <button type="submit" class="btn btn-success"> <span class="glyphicon glyphicon-send"> </span> &nbsp Получить новый токен</button>
+    </form>
+ </div>
+ </div>

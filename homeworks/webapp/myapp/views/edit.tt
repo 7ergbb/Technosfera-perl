@@ -1,0 +1,81 @@
+<div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Редактирование личных данных пользователя - [% user %] </h2>
+            </div>
+        </div>
+
+<div class="row">
+   <div class="col-md-6">
+	 
+	  <form role="form" action= '/edit' method='POST'>
+	 
+	 <!-- <div class="form-group">
+	 <label for="Nicname">Ник</label>
+	  <input type="text" name= "user" class="form-control"  id="disabledInput" placeholder="Nicname" value= [% user %]  disabled="" >
+	</div>
+ -->
+	<div class="form-group">
+	 <label for="Name">ФИО</label>
+	  <input type="text" name= "fio" class="form-control" placeholder="ФИО" required value= [% fio %] > 
+	</div>
+	 
+	 <div class="form-group">
+	 <label for="url_link">Ссылка на проект</label>
+	  <input type="url" name= "url_link" class="form-control" placeholder="http://" required value= [% url_link %] >
+	</div>
+	 
+	 <button type="submit" class="btn btn-success">Сохранить измененя</button>
+	</form>
+
+  </div>
+</div>
+    <div class="row">
+
+   <div class="col-lg-12">
+                <h2 class="page-header">Смена пароля</h2>
+     </div>
+   <div class="col-md-6">
+	 
+	  <form class="form-inline" role="form" action= '/pass' method='POST'>
+
+<div class="form-group">
+	  <label for="pass">Пароль</label>
+	  <input type="password" name= "pass" class="form-control" id="pass" placeholder="Пароль" required>
+	 </div>
+	<button type="submit" class="btn btn-success">Сохранить новый пароль</button> 
+</form>
+
+  </div>
+</div>
+
+<div class="row">
+
+   <div class="col-lg-12">
+                <h2 class="page-header">Удаление аккаунта</h2>
+     </div>
+   <div class="col-md-6">
+	 
+	  <form class="form-inline" role="form" action= '/del/[% user %]' method='POST'>
+
+	  <input type="submit" class="btn btn btn-danger" name="delete" value="Удалить аккаунт" onClick="return confirm ('Уверен?');">
+</form>
+
+
+
+	<!-- <button type=button class="btn btn-sm btn-danger" onclick="if(confirm('Точно?')) location = '/del/:[% user %]'
+   ;else alert('уфффффф...')">Удалить аккаунт</button>  -->
+</form>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

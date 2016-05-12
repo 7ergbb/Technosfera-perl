@@ -1,0 +1,32 @@
+<div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Пользователи </h2>
+            </div>
+        </div>
+
+<div class="row">
+   <div class="col-md-12">
+
+<div class="table-responsive">
+<table class="table table-condensed table-bordered table-hover">
+<tr class="info">
+	<th>Пользователь</td> 
+	<th>ФИО</td> 
+	<th>URL страницы</td> 
+	<th>Токен</td>
+	<th>Рейт</td> 
+</tr> 
+
+[% FOREACH user IN allusers %]
+<tr>
+	<td>[% user.0 %]</td>
+	<td>[% user.1 %]</td>
+	<td>[% user.2 %]</td>
+	<td>[% user.3 %]</td>
+	<td>[% user.4 %]</td>
+</tr>
+[% END %]
+</table>
+</div>
+</div>
+</div>
