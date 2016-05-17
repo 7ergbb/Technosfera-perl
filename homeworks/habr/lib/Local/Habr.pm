@@ -462,14 +462,4 @@ sub out {
 
 ##########################################################################
 
-
-sub hubr {
-  my $arg = shift;
-  get_user($arg);
- 
-  get_commenters("74284");
-  get_self_commentors();
-  get_desert_posts(57);
-  
-};
 1;
