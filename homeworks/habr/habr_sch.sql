@@ -5,18 +5,19 @@ CREATE TABLE User (
 	karma double,
 	rating double
 );
-CREATE TABLE Post (
-id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-author_id INTEGER NOT NULL,
-post_name varchar(255),
-post_rating INTEGER,
-views INTEGER,
-stars INTEGER
-coments_num INTEGER,
-ouner_coments INTEGER,
- FOREIGN KEY(author_id) REFERENCES User(id)
+CREATE TABLE "Post" (
+	`id`	INTEGER NOT NULL,
+	`author_id`	INTEGER NOT NULL,
+	`post_name`	varchar(255),
+	`post_rating`	INTEGER,
+	`views`	INTEGER,
+	`stars`	INTEGER,
+	`owner_coments`	INTEGER,
+	`coments_num`	INTEGER NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(`author_id`) REFERENCES `User`(`id`)
 );
-CREATE TABLE Coments (
+CREATE TABLE "Comments" (
 id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 post_id INTEGER,
 user_id INTEGER,
@@ -24,3 +25,4 @@ FOREIGN KEY(post_id) REFERENCES Post(id),
 FOREIGN KEY(user_id) REFERENCES User(id)
 );
 COMMIT;
+
