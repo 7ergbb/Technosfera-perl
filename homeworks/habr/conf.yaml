@@ -1,0 +1,9 @@
+# параметры подключения к базам данных
+dbase:
+ - 'habr.db'
+
+memcached:
+ - "127.0.0.1:11211"
+  
+site:
+ - 'https://habrahabr.ru'  
