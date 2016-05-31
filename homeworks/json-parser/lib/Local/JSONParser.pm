@@ -2,7 +2,6 @@ package Local::JSONParser;
 
 use strict;
 use base qw(Exporter);
-# use Encode qw(encode decode);
 use Data::Dumper;
 use DDP;
 our @EXPORT_OK = qw( parse_json );
@@ -11,13 +10,12 @@ our @EXPORT = qw( parse_json );
 sub parse_json {
     my $source = shift;
     my $str = checkString($source);
- 
     return $str;
 }
 
 sub deleteEmpty {
     my $string = shift;
-    $string =~ s/\n//gm;
+    # $string =~ s/\n//gm;
     $string =~ s/^\s+//;
     $string =~ s/\s+$//;
 
@@ -26,17 +24,17 @@ sub deleteEmpty {
 
 sub checkString #проверка на соответствие шаблону
 {
-       $_ = deleteEmpty(shift);
+       my $source = deleteEmpty(shift);
     
-       print "\nвот что пришло".$_."\n";
+       print "\nвот что пришло".$source."\n";
 
-    if ( $_=~ m/^(\s*|null|true|false|([-+]?\d*[,\.]?\d+(?:[eE][-+]?\d+)?))$/ )
+    if ( $source=~ m/^(\s*|null|true|false|([-+]?\d*[,\.]?\d+(?:[eE][-+]?\d+)?))$/ )
     {
-        return $_;
+        return $source;
     } # числа, null, true, false, пробел
 
-    if ( $_ =~ m/^\"(?:\\.|[^\"])*+\"$/ ) {
-        for ($_) {
+    if ( $source =~ m/^\"(?:\\.|[^\"])*+\"$/ ) {
+        for ($source) {
             s/^"|"$//g;
             s/\\u(\d{4})/chr(hex($1))/ge;
             s/\\f/\f/g;
@@ -46,11 +44,11 @@ sub checkString #проверка на соответствие шаблону
             s/\\(.)/$1/g;
             s/\\"/"/g;
         }
-        return $_;
+        return $source;
     }
 
-    if ( $_ =~ /^{(.*)}(?=\,|$)/s ) { return splitObj($1); }
-    if ( $_ =~ /^\[(.*)\]/s )  { return splitArr($1) }
+    if ( $source =~ /^{(.*)}(?=\,|$)/s ) { return splitObj($1); }
+    if ( $source =~ /^\[(.*)\]/s )  { return splitArr($1) }
 
      return "Error";
 }
