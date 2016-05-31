@@ -15,9 +15,10 @@ sub parse_json {
 
 sub deleteEmpty {
     my $string = shift;
-    # $string =~ s/\n//gm;
-    $string =~ s/^\s+//;
-    $string =~ s/\s+$//;
+    $string =~ s/\n//gm;
+    # $string =~ s/^\s+//;
+    # $string =~ s/\s+$//;
+    $string =~ s/\s*//gm;
 
     return $string;
 }
