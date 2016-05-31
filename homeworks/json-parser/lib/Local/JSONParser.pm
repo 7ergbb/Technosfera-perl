@@ -2,8 +2,6 @@ package Local::JSONParser;
 
 use strict;
 use base qw(Exporter);
-use Data::Dumper;
-use DDP;
 our @EXPORT_OK = qw( parse_json );
 our @EXPORT = qw( parse_json );
 
@@ -15,20 +13,15 @@ sub parse_json {
 
 sub deleteEmpty {
     my $string = shift;
-    $string =~ s/\n//gm;
-    # $string =~ s/^\s+//;
-    # $string =~ s/\s+$//;
-    $string =~ s/\s*//gm;
-
+    $string =~ s/^\s+//;
+    $string =~ s/\s+$//;
     return $string;
 }
 
 sub checkString #проверка на соответствие шаблону
 {
-       my $source = deleteEmpty(shift);
+    my $source = deleteEmpty(shift);
     
-       print "\nвот что пришло".$source."\n";
-
     if ( $source=~ m/^(\s*|null|true|false|([-+]?\d*[,\.]?\d+(?:[eE][-+]?\d+)?))$/ )
     {
         return $source;
@@ -49,9 +42,8 @@ sub checkString #проверка на соответствие шаблону
     }
 
     if ( $source =~ /^{(.*)}(?=\,|$)/s ) { return splitObj($1); }
-    if ( $source =~ /^\[(.*)\]/s )  { return splitArr($1) }
-
-     return "Error";
+    if ( $source =~ /^\[(.*)\]/s )       { return splitArr($1) }
+    else                                 {return "Error"}
 }
 
 sub splitObj {
@@ -66,42 +58,31 @@ sub splitObj {
         if ( defined( $+{key} ) and defined( $+{value} ) ) {
             my $key   = $+{key};
             my $value = $+{value};
-               $key = deleteEmpty($key);
             if ( $key =~ /\"(?:\\.|[^\"])*+\"/ ) {
-                $key =~ s/^\"//;
-                $key =~ s/\"$//;
+                            $key =~ s/^\"//;
+                            $key =~ s/\"$//;
             }
             $hash{$key} = checkString($value);
         }
-        elsif ( defined( $+{object} ) ) {
-            %hash = splitObj( $+{object} );
-        }
-        elsif ( defined( $+{arr} ) ) {
-            %hash = splitArr( $+{arr} );
-        }
-    }
- 
+        elsif ( ( $+{object} ) ) {%hash = splitObj( $+{object} )}
+        elsif ( ( $+{arr} ) ) {%hash = splitArr( $+{arr} );}}
+        if ($string ne '' and !%hash) {return die "Error: $_\n"}
+        
+        
 
     return \%hash;
 }
 
 sub splitArr {
     my $string = shift;
-       $string = deleteEmpty($string);
-       $string =~ s/^\[//;
-       $string =~ s/\]$//;
-    
     my @array;
 
-    while ( $string
-        =~ /((?<object>\{.*\}(?=\,|$)))|((?<arr>\[.*\](?=\,$)))|((^|\,)(?<value>($string|\w+)(?=\,|$)))/gxsm
-        )
+    while ( $string=~ /((?<object>\{.*\}(?=\,|$)))|((?<arr>\[.*\](?=\,$)))|((^|\,)(?<value>(\"(?:\\.|[^\"])*+\"|\w+)(?=\,|$)))/gxsm)
     {
-        if ( defined( $+{value} ) ) { push @array, checkString( $+{value})}
-        elsif ( defined( $+{object} ) ) {push @array, checkString( $+{object}  )}
-        elsif ( defined( $+{arr} ) ) {push @array, checkString( $+{arr}  )}
+        if ( ( $+{value} ) ) { push @array, checkString( $+{value})}
+        elsif ( ( $+{object} ) ) {push @array, checkString( $+{object}  )}
+        elsif ( ( $+{arr} ) ) {push @array, checkString( $+{arr}  )}
     }
-
     return \@array;
 }
 
