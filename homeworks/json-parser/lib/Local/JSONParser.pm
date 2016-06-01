@@ -2,7 +2,6 @@ package Local::JSONParser;
 
 use strict;
 use base qw(Exporter);
-our @EXPORT_OK = qw( parse_json );
 our @EXPORT = qw( parse_json );
 
 sub parse_json {
@@ -24,9 +23,7 @@ sub checkString #проверка на соответствие шаблону
     my $source = deleteEmpty(shift);
     
     if ( $source=~ m/^(\s*|null|true|false|([-+]?\d*[,\.]?\d+(?:[eE][-+]?\d+)?))$/ )
-    {
-        return $source;
-    } # числа, null, true, false, пробел
+    {return $source;} # числа, null, true, false, пробел
 
     if ( $source =~ m/^\"(?:\\.|[^\"])*+\"$/ ) {
         for ($source) {
@@ -39,7 +36,6 @@ sub checkString #проверка на соответствие шаблону
             s/\\(.)/$1/g;
             s/\\"/"/g;
         }
-            
             return  $source;
     }
 
