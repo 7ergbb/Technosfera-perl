@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 use 5.010;
 use strict;
+use AnyEvent;
 use AnyEvent::HTTP;
 use Getopt::Long;
 use HTML::Parser;
@@ -24,18 +25,28 @@ my $host = $1;
 my @urls = $url;
 my %seen;
 my $url_count = 0;
-my $url = shift @urls;
-	if (exists $seen{$url}) next;
+
+while (@urls) {
+print "I am looking at".$url_."\n"; 	
+    my $url_ = shift @urls;
+	   if (exists $seen{$url_}) next;
 	my $cv = AnyEvent->condvar;
-	$cv->begin;
-	http_get $url,
-     sub  {
+	   $cv->begin;
+	   http_get $url,
+	    sub  {
      	my ($href) = @_;
-     	my $size = length $html;
-     	    $seen{$url};
+     	my $size = length $href;
+     	    $seen{$url_};
      	    $count+=1;
-
-
-
-     };
+     	    while( $href =~ m/<a[^>]*?href=\"([^>]*?)\"[^>]*?>\s*([\w\W]*?)\s*<\/a>/igs )
+		{   	
+			# if () {  
+				push @urls, $url_; 
+			# }
+		}
+		$cv->end;
+$cv->recv;
+};
+}
+    
 
