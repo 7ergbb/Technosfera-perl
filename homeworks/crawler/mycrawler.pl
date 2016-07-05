@@ -7,7 +7,7 @@ use Getopt::Long;
 use HTML::Parser;
 use DDP;
 
-$AnyEvent::HTTP::MAX_PER_HOST = 100; 
+ $AnyEvent::HTTP::MAX_PER_HOST = 100; 
 my $url;
 my $help;
 my $count = 0;
@@ -22,31 +22,48 @@ if ($url !~ /https?:\/\/(.*?)\..+/) {
 	die "Неправильный синтаксис URL";
 }
 my $host = $1;
+print "---------".$host."\n";
 my @urls = $url;
 my %seen;
 my $url_count = 0;
+p $host;
+$| = 1;
 
 while (@urls) {
-print "I am looking at".$url_."\n"; 	
-    my $url_ = shift @urls;
-	   if (exists $seen{$url_}) next;
+       	
+    my $link = shift @urls;
+	   # print "I am looking at-".$link."\n"; 
+	   next if exists $seen{$link};
 	my $cv = AnyEvent->condvar;
 	   $cv->begin;
-	   http_get $url,
-	    sub  {
-     	my ($href) = @_;
-     	my $size = length $href;
-     	    $seen{$url_};
-     	    $count+=1;
-     	    while( $href =~ m/<a[^>]*?href=\"([^>]*?)\"[^>]*?>\s*([\w\W]*?)\s*<\/a>/igs )
-		{   	
-			# if () {  
-				push @urls, $url_; 
-			# }
-		}
-		$cv->end;
-$cv->recv;
-};
+	   http_get $link,
+	            sub {
+     	              
+     	                  my ($html) = @_;
+     	                  my $size = length $html;
+			     	      	$seen{$link} = $size;
+			     	      	$count+=1;
+			     	       		while($html =~m/(.+?)(?<=href=")(.+?)(?=["│ ])/gi)
+					         		{   	
+							  	  		my $scratched  = $2; 
+								  		if (substr ($scratched,0,4) eq "http") 
+								         {  
+								           $scratched =~m/^(http)s?\:\/\/(.+)/gi ;
+								           my $thisurl = $2;
+								           if ((index $thisurl, $host,0) eq 0 && !exists($seen{$scratched})) 
+		                                     {
+		                              	      push @urls, $scratched; 
+		                              	      print "а есть ли оно в хеше".$seen{$scratched}."\n"; 
+		                                     print "this - URL for host ".$host."----".$scratched."\n";
+											 print $count."\n";
+											 }	
+					                      }
+					                }
+					    $cv->end;
+					};
+			
+        				$cv->recv;
+                        
 }
-    
+
 
